@@ -1,6 +1,5 @@
-Voici un README complet et clair, prêt à être copié-collé dans ton fichier `README.md` :
 
-```markdown
+```
 # Digital Health AfricaGroup - Backend APIs
 
 ## Présentation
