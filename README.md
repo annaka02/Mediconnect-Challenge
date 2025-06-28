@@ -1,90 +1,102 @@
-# 🏥 MediConnect - Gestion médicale intelligente
+Voici un README complet et clair, prêt à être copié-collé dans ton fichier `README.md` :
 
-MediConnect est une application de gestion médicale basée sur le standard FHIR. Elle permet la gestion des patients, des conditions médicales et offre une interface moderne pour les professionnels de santé.
+```markdown
+# Digital Health AfricaGroup - Backend APIs
 
-## 🔧 Technologies utilisées
+## Présentation
 
-* **Backend** : Java, Spring Boot, HAPI FHIR
-* **Base de données** : PostgreSQL
-* **Frontend** : Angular 19 + Angular Material
-* **Containerisation** : Docker, Docker Compose
-* **Standard** : FHIR R5
+Ce projet consiste en deux API REST FHIR développées avec Spring Boot pour la gestion des données médicales :  
+- **Patient API** : gestion des ressources Patient  
+- **Condition API** : gestion des ressources Condition médicale  
 
-## 📁 Structure du projet
+Les deux APIs communiquent entre elles via WebClient et sont connectées à des bases de données PostgreSQL distinctes.
+
+---
+
+## Technologies utilisées
+
+- Java 17, Spring Boot 2.7.18  
+- HAPI FHIR (versions 5.6.0 / 6.10.0) pour le standard FHIR (HL7)  
+- PostgreSQL pour la persistance des données  
+- Spring Data JPA pour la gestion des données  
+- Spring Security pour la sécurisation basique  
+- Spring WebFlux / WebClient pour la communication inter-API  
+- Docker & Docker Compose pour la containerisation et orchestration  
+- Maven pour la gestion des dépendances et le build  
+
+---
+
+## Architecture
 
 ```
-mediconnect/
-│
-├── patient-api/              # Service FHIR pour la gestion des patients
-├── condition-api/            # Service FHIR pour la gestion des conditions médicales
-├── frontend/                 # Interface utilisateur Angular
-├── docker-compose.yml        # Lancement simultané des services
-└── README.md
-```
 
-## ⚙️ Lancement rapide (mode développeur)
+PostgreSQL (patientdb) <-- Patient API (port 8080) <---> WebClient ---> Condition API (port 8081) --> PostgreSQL (conditiondb)
 
-### 1. Prérequis
+````
 
-* Java 17+
-* Node.js 18+
-* PostgreSQL
-* Docker & Docker Compose
+---
 
-### 2. Clonage du projet
+## Installation et lancement
 
-```bash
-git clone https://github.com/annaka02/mediconnect-challenge.git
-cd mediconnect
-```
+### Prérequis
 
-### 3. Lancer avec Docker
+- Docker & Docker Compose installés  
+- Maven installé (optionnel, pour build local)  
+
+### Démarrage
+
+Pour lancer tous les services (APIs + bases de données) :
 
 ```bash
 docker-compose up --build
-```
+````
 
-### 4. Accès
+### Endpoints accessibles
 
-| Service         | URL                          |
-| --------------- | ---------------------------- |
-| Frontend        | `http://localhost:4200`      |
-| Patient API     | `http://localhost:8081/fhir` |
-| Condition API   | `http://localhost:8082/fhir` |
-| PostgreSQL (DB) | `localhost:5432`             |
+* Patient API : `http://localhost:8080/fhir/Patient`
+* Condition API : `http://localhost:8081/fhir/Condition`
 
-## 🧪 Exemples d’Endpoints (FHIR)
+---
 
-* `GET /fhir/Patient`
-* `POST /fhir/Patient`
-* `GET /fhir/Condition?patient=123`
-* `PUT /fhir/Condition/{id}`
+## Fonctionnalités principales
 
-Tu peux tester les endpoints avec **Postman** 
+* **Patient API** : CRUD complet sur les ressources Patient
+* **Condition API** : CRUD complet sur les ressources Condition, avec validation liée au Patient via WebClient
+* Gestion des erreurs centralisée avec ControllerAdvice
+* Sécurisation basique avec Spring Security
 
-## 🛆 Base de données
+---
 
-Les identifiants par défaut sont :
+## Communication entre APIs
 
-```env
-POSTGRES_DB=mediconnect_db
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=admin123
-```
+La Condition API utilise un client WebClient pour interroger Patient API et récupérer les données Patient associées, permettant ainsi une cohérence des données entre les deux services.
 
-## 📝 TODO
+---
 
-* [x] Implémentation FHIR Patient
-* [x] Implémentation FHIR Condition
-* [ ] Intégration Authentification (Admin, Médecins)
-* [ ] Gestion des consultations
-* [ ] Statistiques médicales
-* [ ] Documentation complète de l’API
+## Problèmes rencontrés et solutions
 
-## 👥 Auteur
+* Alignement des versions HAPI FHIR entre les APIs
+* Configuration Hibernate avec PostgreSQL (dialect, connexion)
+* Gestion des erreurs personnalisée dans les APIs FHIR
+* Containerisation multi-stage Docker optimisée pour build et runtime
 
-* Anna Ka (Développeuse Fullstack & Cybersécurité)
+---
 
-## 📜 Licence
+## Prochaines étapes
 
-Ce projet est développé à des fins pédagogiques et n’est pas destiné à un usage médical réel pour l’instant.
+* Renforcement de la sécurité (authentification JWT/OAuth)
+* Développement du frontend Angular pour le dashboard
+* Ajout des tests unitaires et d’intégration automatisés
+* Documentation Swagger / OpenAPI plus détaillée
+
+---
+
+## Auteur
+
+Projet développé par Anna Ka dans le cadre du challenge Digital Health AfricaGroup.
+
+---
+
+Merci pour votre lecture et votre confiance !
+
+
