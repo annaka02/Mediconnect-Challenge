@@ -11,6 +11,8 @@ import org.hl7.fhir.r5.model.Patient;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @Component
 public class PatientResourceProvider implements IResourceProvider {
 
