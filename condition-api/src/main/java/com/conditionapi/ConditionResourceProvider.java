@@ -11,10 +11,12 @@ import org.hl7.fhir.r5.model.IdType;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @Component
 public class ConditionResourceProvider implements IResourceProvider {
 
